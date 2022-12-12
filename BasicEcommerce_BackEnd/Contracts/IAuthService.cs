@@ -7,9 +7,7 @@ namespace BasicEcommerce_BackEnd.Contracts
     {
         string GetToken(ApiUser user);
 
-        bool CheckToken();
-
-        bool LoginApp();
+        User LoginApp(UserRequest userRequest);
 
         ApiUser CheckApiUser(ApiUserRequest apiUserRequest);
     }

@@ -15,7 +15,8 @@ namespace BasicEcommerce_BackEnd.Util
             IDictionary<Type, int?> exception = new Dictionary<Type, int?>()
             {
                 { typeof(JsonSerializationException), (int?)HttpStatusCode.BadRequest },
-                { typeof(UnauthorizedException), (int?)HttpStatusCode.Unauthorized }
+                { typeof(UnauthorizedException), (int?)HttpStatusCode.Unauthorized },
+                { typeof(ForbiddenException), (int?)HttpStatusCode.Forbidden}
             };
             bool successGet = exception.TryGetValue(ex.GetType(), out int? statusCode);
             if (!successGet)

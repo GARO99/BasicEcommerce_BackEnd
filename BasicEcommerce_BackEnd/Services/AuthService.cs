@@ -23,11 +23,6 @@ namespace BasicEcommerce_BackEnd.Services
             DbContext = dbContex;
         }
 
-        public bool CheckToken()
-        {
-            throw new NotImplementedException();
-        }
-
         public string GetToken(ApiUser user)
         {
             JwtSecurityTokenHandler tokenHandler = new();
@@ -59,9 +54,17 @@ namespace BasicEcommerce_BackEnd.Services
             return user;
         }
 
-        public bool LoginApp()
+        public User LoginApp(UserRequest userRequest)
         {
-            throw new NotImplementedException();
+            User? user = this.DbContext.Users.Where(u => u.Email == userRequest.Email &&
+            u.Password == Helper.HashSHA256(userRequest.Password)).FirstOrDefault();
+            if (user == null)
+            {
+                throw new ForbiddenException("User app not found");
+            }
+            this.DbContext.Entry(user).Reference(u => u.IdNumberPersonNavigation).Load();
+
+            return user;
         }
     }
 }

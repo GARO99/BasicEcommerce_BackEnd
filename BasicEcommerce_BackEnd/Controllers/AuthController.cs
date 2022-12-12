@@ -18,12 +18,10 @@ namespace BasicEcommerce_BackEnd.Controllers
             LazyAuthService = lazyAuthService;
         }
 
-        /// <summary> Gets token to uses in our API </summary>
-        /// <param name="apiUser"> Api user to get the token </param>
-        /// <returns> Return a token </returns>
         [HttpPost]
         [Route("token")]
         [SwaggerOperation(Summary = " Gets token", Description = "Gets token to uses in our API")]
+        [SwaggerResponse(200, Description = "Api token", Type = typeof(string))]
         public IActionResult GetToken([FromBody, SwaggerRequestBody("User Credentials", Required = true)] ApiUserRequest apiUser)
         {
             try
