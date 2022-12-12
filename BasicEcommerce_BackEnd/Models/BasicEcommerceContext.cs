@@ -64,7 +64,7 @@ public partial class BasicEcommerceContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdNumberPersonNavigation).WithMany(p => p.Clients)
+            entity.HasOne(d => d.Person).WithMany(p => p.Clients)
                 .HasForeignKey(d => d.IdNumberPerson)
                 .HasConstraintName("FK__Client__IdNumber__286302EC");
         });
@@ -78,7 +78,7 @@ public partial class BasicEcommerceContext : DbContext
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.TotalAmount).HasColumnType("money");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Orders)
+            entity.HasOne(d => d.Client).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.Idclient)
                 .HasConstraintName("FK__Order__TotalAmou__31EC6D26");
         });
@@ -91,11 +91,11 @@ public partial class BasicEcommerceContext : DbContext
 
             entity.Property(e => e.Amount).HasColumnType("money");
 
-            entity.HasOne(d => d.IdOrderNavigation).WithMany(p => p.OrderDetails)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.IdOrder)
                 .HasConstraintName("FK__OrderDeta__IdOrd__34C8D9D1");
 
-            entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.OrderDetails)
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.IdProduct)
                 .HasConstraintName("FK__OrderDeta__IdPro__35BCFE0A");
         });
@@ -145,7 +145,7 @@ public partial class BasicEcommerceContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("password");
 
-            entity.HasOne(d => d.IdNumberPersonNavigation).WithMany(p => p.Users)
+            entity.HasOne(d => d.Person).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdNumberPerson)
                 .HasConstraintName("FK__Users__password__2D27B809");
         });

@@ -23,11 +23,6 @@ namespace BasicEcommerce_BackEnd.Services
             DbContext = dbContex;
         }
 
-        public bool CheckToken()
-        {
-            throw new NotImplementedException();
-        }
-
         public string GetToken(ApiUser user)
         {
             JwtSecurityTokenHandler tokenHandler = new();
@@ -49,8 +44,8 @@ namespace BasicEcommerce_BackEnd.Services
 
         public ApiUser CheckApiUser(ApiUserRequest apiUserRequest)
         {
-            ApiUser? user = this.DbContext.ApiUsers.Where(a => a.UserName == apiUserRequest.UserName && 
-            a.Password == Helper.HashSHA256(apiUserRequest.Password)).FirstOrDefault();
+            ApiUser? user = this.DbContext.ApiUsers.FirstOrDefault(a => a.UserName == apiUserRequest.UserName && 
+            a.Password == Helper.HashSHA256(apiUserRequest.Password));
             if (user == null)
             {
                 throw new UnauthorizedException("User not found");
@@ -59,9 +54,17 @@ namespace BasicEcommerce_BackEnd.Services
             return user;
         }
 
-        public bool LoginApp()
+        public User LoginApp(UserRequest userRequest)
         {
-            throw new NotImplementedException();
+            User? user = this.DbContext.Users.FirstOrDefault(u => u.Email == userRequest.Email &&
+            u.Password == Helper.HashSHA256(userRequest.Password));
+            if (user == null)
+            {
+                throw new ForbiddenException("User app not found");
+            }
+            this.DbContext.Entry(user).Reference(u => u.Person).Load();
+
+            return user;
         }
     }
 }

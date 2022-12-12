@@ -2,10 +2,10 @@ using BasicEcommerce_BackEnd.Contracts;
 using BasicEcommerce_BackEnd.Models;
 using BasicEcommerce_BackEnd.Services;
 using BasicEcommerce_BackEnd.Settings;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,11 +52,11 @@ builder.Services.AddSwaggerGen(c =>
 //Read app settings configuration
 builder.Services.Configure<AppSettings>(builder.Configuration);
 //Authentication
-builder.Services.AddAuthentication(item => 
+builder.Services.AddAuthentication(item =>
 {
     item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(item => 
+}).AddJwtBearer(item =>
 {
     item.RequireHttpsMetadata = true;
     item.SaveToken = true;
@@ -74,6 +74,12 @@ builder.Services.AddDbContext<BasicEcommerceContext>(opt => opt.UseSqlServer(bui
 //Dependency injection
 builder.Services.AddScoped<IAuthService, AuthService>()
     .AddScoped(serviceProvider => new Lazy<IAuthService>(() => serviceProvider.GetRequiredService<IAuthService>()));
+builder.Services.AddScoped<IProductService, ProductService>()
+    .AddScoped(serviceProvider => new Lazy<IProductService>(() => serviceProvider.GetRequiredService<IProductService>()));
+builder.Services.AddScoped<IClientService, ClientService>()
+    .AddScoped(serviceProvider => new Lazy<IClientService>(() => serviceProvider.GetRequiredService<IClientService>()));
+builder.Services.AddScoped<IOrderService, OrderService>()
+    .AddScoped(serviceProvider => new Lazy<IOrderService>(() => serviceProvider.GetRequiredService<IOrderService>()));
 
 var app = builder.Build();
 

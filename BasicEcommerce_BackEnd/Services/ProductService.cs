@@ -1,0 +1,80 @@
+﻿using BasicEcommerce_BackEnd.Contracts;
+using BasicEcommerce_BackEnd.Models;
+using BasicEcommerce_BackEnd.Util.Exceptions;
+using BasicEcommerce_BackEnd.Util.Request;
+
+namespace BasicEcommerce_BackEnd.Services
+{
+    public class ProductService : IProductService
+    {
+        private readonly BasicEcommerceContext DbContext;
+
+        public ProductService(BasicEcommerceContext dbContex)
+        {
+            DbContext = dbContex;
+        }
+
+        public Product Create(ProductRequest productRequest)
+        {
+            if (this.DbContext.Products.FirstOrDefault(p => p.ProductName == productRequest.ProductName) != null)
+            {
+                throw new ConflictException("Product allready exist");
+            }
+            Product product = new()
+            {
+                ProductName = productRequest.ProductName,
+                Price = productRequest.Price
+            };
+            this.DbContext.Products.Add(product);
+            this.DbContext.SaveChanges();
+
+            return this.DbContext.Products.First(p => p.IdProduct == this.DbContext.Products.Max(p => p.IdProduct));
+        }
+
+        public void Delete(long id)
+        {
+            Product? product = this.DbContext.Products.FirstOrDefault(p => p.IdProduct == id);
+            if (product == null)
+            {
+                throw new ConflictException("Product not exist");
+            }
+            this.DbContext.Products.Remove(product);
+            this.DbContext.SaveChanges();
+        }
+
+        public ICollection<Product> GetAll()
+        {
+            return this.DbContext.Products.ToList();
+        }
+
+        public Product GetById(long id)
+        {
+            Product? product = this.DbContext.Products.FirstOrDefault(p => p.IdProduct == id);
+            if (product == null)
+            {
+                throw new ConflictException("Product not exist");
+            }
+            if (this.DbContext.Products.FirstOrDefault(p => p.IdProduct != id && p.ProductName == product.ProductName) != null)
+            {
+                throw new ConflictException("Product allready exist");
+            }
+
+            return product;
+        }
+
+        public Product Update(ProductRequest productRequest)
+        {
+            Product? product = this.DbContext.Products.FirstOrDefault(p => p.IdProduct == productRequest.IdProduct);
+            if (product == null)
+            {
+                throw new ConflictException("Product not exist");
+            }
+            product.ProductName = productRequest.ProductName;
+            product.Price = productRequest.Price;
+
+            this.DbContext.SaveChanges();
+
+            return product;
+        }
+    }
+}
