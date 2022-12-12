@@ -78,6 +78,8 @@ builder.Services.AddScoped<IProductService, ProductService>()
     .AddScoped(serviceProvider => new Lazy<IProductService>(() => serviceProvider.GetRequiredService<IProductService>()));
 builder.Services.AddScoped<IClientService, ClientService>()
     .AddScoped(serviceProvider => new Lazy<IClientService>(() => serviceProvider.GetRequiredService<IClientService>()));
+builder.Services.AddScoped<IOrderService, OrderService>()
+    .AddScoped(serviceProvider => new Lazy<IOrderService>(() => serviceProvider.GetRequiredService<IOrderService>()));
 
 var app = builder.Build();
 

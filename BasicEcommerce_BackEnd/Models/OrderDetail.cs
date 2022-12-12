@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace BasicEcommerce_BackEnd.Models;
 
@@ -15,7 +14,8 @@ public partial class OrderDetail
 
     public decimal Amount { get; set; }
 
-    public virtual Order? IdOrderNavigation { get; set; }
+    [JsonIgnore]
+    public virtual Order? Order { get; set; }
 
-    public virtual Product? IdProductNavigation { get; set; }
+    public virtual Product? Product { get; set; }
 }

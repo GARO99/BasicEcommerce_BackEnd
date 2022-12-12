@@ -39,7 +39,7 @@ namespace BasicEcommerce_BackEnd.Services
             this.DbContext.Clients.Add(client);
             this.DbContext.SaveChanges();
 
-            return this.DbContext.Clients.First(p => p.Idclient == this.DbContext.Clients.Max(p => p.Idclient));
+            return this.DbContext.Clients.First(c => c.Idclient == this.DbContext.Clients.Max(c => c.Idclient));
         }
 
         public void Delete(string idNumber)
@@ -59,7 +59,7 @@ namespace BasicEcommerce_BackEnd.Services
             ICollection<Client> clientList = this.DbContext.Clients.ToList();
             foreach (Client client in clientList)
             {
-                this.DbContext.Entry(client).Reference(u => u.Person).Load();
+                this.DbContext.Entry(client).Reference(c => c.Person).Load();
             }
             return clientList;
         }
