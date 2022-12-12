@@ -74,6 +74,8 @@ builder.Services.AddDbContext<BasicEcommerceContext>(opt => opt.UseSqlServer(bui
 //Dependency injection
 builder.Services.AddScoped<IAuthService, AuthService>()
     .AddScoped(serviceProvider => new Lazy<IAuthService>(() => serviceProvider.GetRequiredService<IAuthService>()));
+builder.Services.AddScoped<IProductService, ProductService>()
+    .AddScoped(serviceProvider => new Lazy<IProductService>(() => serviceProvider.GetRequiredService<IProductService>()));
 
 var app = builder.Build();
 

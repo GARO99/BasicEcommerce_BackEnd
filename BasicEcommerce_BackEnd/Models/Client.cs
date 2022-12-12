@@ -7,9 +7,9 @@ public partial class Client
 {
     public long Idclient { get; set; }
 
-    public string? IdNumberPerson { get; set; }
+    public string IdNumberPerson { get; set; } = null!;
 
-    public string? PhoneNumbre { get; set; }
+    public string PhoneNumbre { get; set; } = null!;
 
     public virtual Person? IdNumberPersonNavigation { get; set; }
 

@@ -145,7 +145,7 @@ public partial class BasicEcommerceContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("password");
 
-            entity.HasOne(d => d.IdNumberPersonNavigation).WithMany(p => p.Users)
+            entity.HasOne(d => d.Person).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdNumberPerson)
                 .HasConstraintName("FK__Users__password__2D27B809");
         });

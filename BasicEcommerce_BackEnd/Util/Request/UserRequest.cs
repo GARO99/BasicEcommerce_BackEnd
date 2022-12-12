@@ -4,10 +4,9 @@ namespace BasicEcommerce_BackEnd.Util.Request
 {
     public class UserRequest
     {
-#nullable disable
         [JsonRequired]
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
         [JsonRequired]
-        public string Password { get; set; }
+        public string Password { get; set; } = null!;
     }
 }

@@ -16,7 +16,8 @@ namespace BasicEcommerce_BackEnd.Util
             {
                 { typeof(JsonSerializationException), (int?)HttpStatusCode.BadRequest },
                 { typeof(UnauthorizedException), (int?)HttpStatusCode.Unauthorized },
-                { typeof(ForbiddenException), (int?)HttpStatusCode.Forbidden}
+                { typeof(ForbiddenException), (int?)HttpStatusCode.Forbidden},
+                { typeof(ConflictException), (int?)HttpStatusCode.Conflict }
             };
             bool successGet = exception.TryGetValue(ex.GetType(), out int? statusCode);
             if (!successGet)
