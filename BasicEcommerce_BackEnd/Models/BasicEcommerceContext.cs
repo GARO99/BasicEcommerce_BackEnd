@@ -64,7 +64,7 @@ public partial class BasicEcommerceContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdNumberPersonNavigation).WithMany(p => p.Clients)
+            entity.HasOne(d => d.Person).WithMany(p => p.Clients)
                 .HasForeignKey(d => d.IdNumberPerson)
                 .HasConstraintName("FK__Client__IdNumber__286302EC");
         });

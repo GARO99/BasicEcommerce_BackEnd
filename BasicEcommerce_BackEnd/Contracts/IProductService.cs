@@ -6,9 +6,9 @@ namespace BasicEcommerce_BackEnd.Contracts
     public interface IProductService
     {
         ICollection<Product> GetAll();
-        Product GetById(int id);
+        Product GetById(long id);
         Product Create(ProductRequest productRequest);
         Product Update(ProductRequest productRequest);
-        void Delete(int id);
+        void Delete(long id);
     }
 }

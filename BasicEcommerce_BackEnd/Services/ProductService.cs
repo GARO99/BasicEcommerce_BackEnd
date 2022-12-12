@@ -16,6 +16,10 @@ namespace BasicEcommerce_BackEnd.Services
 
         public Product Create(ProductRequest productRequest)
         {
+            if (this.DbContext.Products.FirstOrDefault(p => p.ProductName == productRequest.ProductName) != null)
+            {
+                throw new ConflictException("Product allready exist");
+            }
             Product product = new()
             {
                 ProductName = productRequest.ProductName,
@@ -27,7 +31,7 @@ namespace BasicEcommerce_BackEnd.Services
             return this.DbContext.Products.First(p => p.IdProduct == this.DbContext.Products.Max(p => p.IdProduct));
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             Product? product = this.DbContext.Products.FirstOrDefault(p => p.IdProduct == id);
             if (product == null)
@@ -43,12 +47,16 @@ namespace BasicEcommerce_BackEnd.Services
             return this.DbContext.Products.ToList();
         }
 
-        public Product GetById(int id)
+        public Product GetById(long id)
         {
             Product? product = this.DbContext.Products.FirstOrDefault(p => p.IdProduct == id);
             if (product == null)
             {
                 throw new ConflictException("Product not exist");
+            }
+            if (this.DbContext.Products.FirstOrDefault(p => p.IdProduct != id && p.ProductName == product.ProductName) != null)
+            {
+                throw new ConflictException("Product allready exist");
             }
 
             return product;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace BasicEcommerce_BackEnd.Models;
 
@@ -11,7 +10,8 @@ public partial class Client
 
     public string PhoneNumbre { get; set; } = null!;
 
-    public virtual Person? IdNumberPersonNavigation { get; set; }
+    public virtual Person? Person { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Order> Orders { get; } = new List<Order>();
 }

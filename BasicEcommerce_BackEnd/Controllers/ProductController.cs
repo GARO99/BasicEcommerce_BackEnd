@@ -37,7 +37,7 @@ namespace BasicEcommerce_BackEnd.Controllers
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Gets a product by id", Description = "Gets a product by id")]
         [SwaggerResponse(200, Description = "Product info", Type = typeof(Product))]
-        public IActionResult Get(int id)
+        public IActionResult Get(long id)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace BasicEcommerce_BackEnd.Controllers
         }
 
         [HttpPut()]
-        [SwaggerOperation(Summary = "Update a product by id", Description = "Update a product by id")]
+        [SwaggerOperation(Summary = "Update a product", Description = "Update a product")]
         [SwaggerResponse(200, Description = "Product updated", Type = typeof(Product))]
         public IActionResult Put([FromBody] ProductRequest productRequest)
         {
@@ -82,7 +82,7 @@ namespace BasicEcommerce_BackEnd.Controllers
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete a product by id", Description = "Delete a product by id")]
         [SwaggerResponse(200, Description = "Success messages", Type = typeof(string))]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(long id)
         {
             try
             {
