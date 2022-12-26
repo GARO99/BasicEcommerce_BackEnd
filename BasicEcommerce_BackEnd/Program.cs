@@ -80,7 +80,10 @@ builder.Services.AddScoped<IClientService, ClientService>()
     .AddScoped(serviceProvider => new Lazy<IClientService>(() => serviceProvider.GetRequiredService<IClientService>()));
 builder.Services.AddScoped<IOrderService, OrderService>()
     .AddScoped(serviceProvider => new Lazy<IOrderService>(() => serviceProvider.GetRequiredService<IOrderService>()));
-
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+}));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -89,6 +92,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("corsapp");
 
 app.UseHttpsRedirection();
 
