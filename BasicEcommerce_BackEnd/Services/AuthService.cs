@@ -45,7 +45,7 @@ namespace BasicEcommerce_BackEnd.Services
         public ApiUser CheckApiUser(ApiUserRequest apiUserRequest)
         {
             ApiUser? user = this.DbContext.ApiUsers.FirstOrDefault(a => a.UserName == apiUserRequest.UserName && 
-            a.Password == Helper.HashSHA256(apiUserRequest.Password));
+            a.Password == apiUserRequest.Password);
             if (user == null)
             {
                 throw new UnauthorizedException("User not found");
@@ -57,7 +57,7 @@ namespace BasicEcommerce_BackEnd.Services
         public User LoginApp(UserRequest userRequest)
         {
             User? user = this.DbContext.Users.FirstOrDefault(u => u.Email == userRequest.Email &&
-            u.Password == Helper.HashSHA256(userRequest.Password));
+            u.Password == userRequest.Password);
             if (user == null)
             {
                 throw new ForbiddenException("User app not found");
